@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4ada8bf0352ae649a98fea14853261c, type: 3}
+  m_Name: TerrainTiles
+  m_EditorClassIdentifier: 
+  tiles:
+  - tileId: 1
+    offset: 0
+    height: 4
+  - tileId: 2
+    offset: 5
+    height: 56
+  - tileId: 3
+    offset: 56
+    height: 260
