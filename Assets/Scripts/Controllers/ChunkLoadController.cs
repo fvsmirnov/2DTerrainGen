@@ -2,51 +2,65 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChunkLoadController : MonoBehaviour
+namespace TerrainGen
 {
-    public Transform viewer;
-    private int chunksVisible = 1;
-    private List<Chunk> loadedChunks = new List<Chunk>();
-    
-    void Update()
+    public class ChunkLoadController : MonoBehaviour
     {
-        UpdateVisibleChunks();
-    }
+        public Transform viewer;
+        public Vector2Int chunkVisibleRadius = Vector2Int.zero;
 
-    int currentChunkCoordX;
-    int currentChunkCoordY;
-    void UpdateVisibleChunks()
-    {
-        DisbleLoadedChunks();
+        private int currentViewerCoordX, currentViewerCoordY;
+        private Vector3 prevViewerPos = Vector3.zero;
+        private List<Chunk> loadedChunks = new List<Chunk>();
 
-        currentChunkCoordX = Mathf.RoundToInt(viewer.position.x / ChunkManager.chunkSize.x);
-        currentChunkCoordY = Mathf.RoundToInt(viewer.position.y / ChunkManager.chunkSize.y);
-
-        for (int yOffset = -chunksVisible; yOffset <= chunksVisible; yOffset++)
+        void Update()
         {
-            for (int xOffset = -chunksVisible; xOffset <= chunksVisible; xOffset++)
-            {
-                Vector3Int viewerChunkCoord = new Vector3Int((currentChunkCoordX + xOffset) * ChunkManager.chunkSize.x,
-                                                             (currentChunkCoordY + yOffset) * ChunkManager.chunkSize.y, 0);
+            CheckVisibleChunks();
+            //UpdateVisibleChunks();
+        }
 
-                if (ChunkManager.chunkArray.ContainsKey(viewerChunkCoord))
-                {
-                    ChunkManager.chunkArray[viewerChunkCoord].Load(true);
-                    loadedChunks.Add(ChunkManager.chunkArray[viewerChunkCoord]);
-                }
-                    
+        void CheckVisibleChunks()
+        {
+            //Update viewer coords
+            currentViewerCoordX = Mathf.FloorToInt(viewer.position.x / ChunkManager.chunkSize.x);
+            currentViewerCoordY = Mathf.FloorToInt(viewer.position.y / ChunkManager.chunkSize.y);
+
+            if (prevViewerPos.x != currentViewerCoordX || prevViewerPos.y != currentViewerCoordY)
+            {
+                prevViewerPos = new Vector3(currentViewerCoordX, currentViewerCoordY, 0);
+                UpdateVisibleChunks();
             }
         }
 
-    }
-
-    void DisbleLoadedChunks()
-    {
-        for (int i = 0; i < loadedChunks.Count; i++)
+        void UpdateVisibleChunks()
         {
-            loadedChunks[i].Load(false);
-        }
-        loadedChunks.Clear();
-    }
+            DisbleLoadedChunks();
 
+            for (int yOffset = -chunkVisibleRadius.y; yOffset <= chunkVisibleRadius.y; yOffset++)
+            {
+                for (int xOffset = -chunkVisibleRadius.x; xOffset <= chunkVisibleRadius.x; xOffset++)
+                {
+                    Vector3Int viewerChunkCoord = new Vector3Int((currentViewerCoordX + xOffset) * ChunkManager.chunkSize.x,
+                                                                 (currentViewerCoordY + yOffset) * ChunkManager.chunkSize.y, 0);
+
+                    if (ChunkManager.chunkArray.ContainsKey(viewerChunkCoord))
+                    {
+                        ChunkManager.chunkArray[viewerChunkCoord].Load(true);
+                        loadedChunks.Add(ChunkManager.chunkArray[viewerChunkCoord]);
+                    }
+
+                }
+            }
+
+        }
+
+        void DisbleLoadedChunks()
+        {
+            for (int i = 0; i < loadedChunks.Count; i++)
+            {
+                loadedChunks[i].Load(false);
+            }
+            loadedChunks.Clear();
+        }
+    }
 }

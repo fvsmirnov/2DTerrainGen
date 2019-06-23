@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TerrainGen;
 
 public class DigController : MonoBehaviour
 {
