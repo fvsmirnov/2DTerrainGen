@@ -18,7 +18,7 @@
 <b>Main features</b> 
 <ul>
   <li>Easy terrain generation based on multiple Perlin noise layers</li>
-  <li>Two layer terrain style (like terraria etc.)</li>
+  <li>Two layers terrain style (like terraria etc.)</li>
   <li>Compatible with Tilemap features</li>
   <li>User friendly interface</li>	
 </ul> 
