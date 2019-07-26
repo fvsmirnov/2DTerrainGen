@@ -25,5 +25,5 @@
 
 <dl>
   <dt>Unity version</dt>
-  <dd>Package has been submitted using <b>Unity 2018.3.12</b></dd>
+  <dd>Package has been submitted using <b>Unity 2018.3</b></dd>
 </dl>
